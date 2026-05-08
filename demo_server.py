@@ -437,8 +437,8 @@ def success_page(is_secure, fields):
             Wireshark should show TLS records on port {HTTPS_PORT}, but it should not show readable form fields.
         </p>
         <div class="trace"><span>capture_result</span>: encrypted TLS application data<br>
-        <span>visible_username</span>: not readable in the packet stream<br>
-        <span>server_received</span>: {username}</div>
+        <span>visible_form_fields</span>: not readable in the packet stream<br>
+        <span>endpoint_note</span>: the server can read data only after TLS decryption</div>
         <a class="button" href="/">Run secure capture again</a>"""
         return render_page(
             title="HTTPS Result",
@@ -503,7 +503,11 @@ class DemoHandler(BaseHTTPRequestHandler):
 
         protocol = "HTTPS" if self.is_secure else "HTTP"
         print(f"\n[{protocol} POST received by server]")
-        print(body)
+        if self.is_secure:
+            print("Form submitted over HTTPS. The server can read it after TLS decryption.")
+            print("In Wireshark, the packet payload should appear as TLS application data.")
+        else:
+            print(body)
 
         self.send_html(success_page(self.is_secure, fields))
 
