@@ -18,4 +18,6 @@ python .\demo_server.py
 
 For detailed Wireshark steps, see [README_LAB.md](README_LAB.md).
 
+For the defensive Scapy traffic monitor, see [SAFE_SCAPY_MONITOR_GUIDE.md](SAFE_SCAPY_MONITOR_GUIDE.md).
+
 Use only test credentials in this lab.
